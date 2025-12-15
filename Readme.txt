@@ -1,8 +1,8 @@
-=== AdminPad ===
-Plugin Name: AdminPad
+=== Debug Viewer ===
+Plugin Name: Debug Viewer
 Plugin URI: https://github.com/iftekharbhuiyan/wp-debug-viewer
-Tags: simple note, note taker, notepad, site administrator, admin note
-Author URI: https://profiles.wordpress.org/iftekharbhuiyan/
+Tags: debug log, debug viewer, site administrator
+Author URI: https://github.com/iftekharbhuiyan/
 Author: Iftekhar Bhuiyan
 Requires at least: 5.0
 Requires PHP: 8.0
@@ -28,4 +28,3 @@ This plugin allows site Administrators to see debug log content from Dashboard.
 
 = 1.0.0 =
 * Initial release
-
