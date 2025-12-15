@@ -67,17 +67,17 @@ if (!class_exists('BSFT_Debug_Viewer')) :
                 $file_mb_format = number_format($file_mb, 2) . ' MB';
                 $data .= esc_textarea(file_get_contents($debug_file));
             } else {
-                $data .= esc_html__('File does not exist!', 'debug-viewer');
+                $data .= esc_html('File does not exist!');
             }
             $data .= '</textarea>';
             $data .= '<div style="display: flex; margin: 10px -12px -12px -12px; padding: 10px; ';
             $data .= 'border-top: 1px solid #dcdcde; background-color: #f6f7f7;">';
             $data .= '<div style="flex: 1 1 50%;">';
             if (file_exists($debug_file)) :
-            $data .= '<form action="' . esc_url(admin_url('index.php')) . '" method="post">';
-            $data .= '<input type="hidden" id="debug_nonce" name="debug_nonce" value="' . esc_attr(wp_create_nonce(basename(__FILE__))) . '">';
-            $data .= '<button type="submit" class="button button-primary">' . esc_html('Delete Log') . '</button>';
-            $data .= '</form>';
+                $data .= '<form action="' . esc_url(admin_url('index.php')) . '" method="post">';
+                $data .= '<input type="hidden" id="debug_nonce" name="debug_nonce" value="' . esc_attr(wp_create_nonce(basename(__FILE__))) . '">';
+                $data .= '<button type="submit" class="button button-primary">' . esc_html('Delete Log') . '</button>';
+                $data .= '</form>';
             endif;
             $data .= '</div>';
             $data .= '<div style="flex: 1 1 50%; align-self: center; text-align: right; ">';
