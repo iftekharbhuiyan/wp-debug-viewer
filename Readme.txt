@@ -11,17 +11,17 @@ Stable tag: 1.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-This plugin allows site Administrators to see debug log content from Dashboard.
+This plugin allows site administrators to view the debug log from the Dashboard.
 
 == Description ==
 
-This plugin allows site Administrators to see debug log content from Dashboard.
+This plugin allows site administrators to view the debug log from the Dashboard.
 
 
 == Installation ==
 
-1. Upload the "wp-debug-viewer" folder on your site's "/wp-content/plugins" folder.
-2. Activate it from your site's plugin section.
+1. Upload the `wp-debug-viewer` folder to your site's `/wp-content/plugins/` directory.
+2. Activate the plugin from the Plugins screen in WordPress.
 
 
 == Changelog ==

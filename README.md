@@ -1,2 +1,2 @@
 # Debug Viewer
-This WordPress plugin allows site Administrators to see debug log content from Dashboard.
+This WordPress plugin allows site administrators to view the debug log from the Dashboard.
