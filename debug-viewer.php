@@ -15,7 +15,6 @@ if (!defined('ABSPATH')) {
     die('Invalid request.');
 }
 
-// check class existence
 if (!class_exists('BSFT_Debug_Viewer')) :
 
     class BSFT_Debug_Viewer {
@@ -46,9 +45,8 @@ if (!class_exists('BSFT_Debug_Viewer')) :
 
         // render viewer
         public function get_viewer() {
-            $file_mb_format = '0.00';
             // form submission
-            if (isset($_POST['debug_nonce']) && wp_verify_nonce($_POST['debug_nonce'], basename(__FILE__))) {
+            if (isset($_POST['debug_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['debug_nonce'])), basename(__FILE__))) {
                 if (current_user_can('manage_options')) {
                     if (file_exists($this->debug_file)) {
                         if (!function_exists('wp_delete_file')) {
@@ -63,49 +61,69 @@ if (!class_exists('BSFT_Debug_Viewer')) :
             $data .= '<textarea class="small-text" style="width: 100%; height: 15em;" readonly>';
             // read the log data
             if (file_exists($this->debug_file)) {
-                $file_size = filesize($this->debug_file);
-                $file_mb = ($file_size / (1024 * 1024));
-                $file_mb_format = number_format($file_mb, 2);
-                $data .= esc_textarea(file_get_contents($this->debug_file));
+                $data .= file_get_contents($this->debug_file);
             } else {
-                $data .= esc_html('File does not exist!');
+                $data .= esc_html('Debug log does not exist!');
             }
             $data .= '</textarea>';
-            $data .= '<div style="display: flex; margin: 10px -12px -12px -12px; padding: 10px; ';
-            $data .= 'border-top: 1px solid #dcdcde; background-color: #f6f7f7;">';
-            $data .= '<div style="flex: 1 1 50%;">';
             // delete button
-            if (file_exists($this->debug_file)) :
-                $data .= '<form action="' . esc_url(admin_url('index.php')) . '" method="post">';
-                $data .= '<input type="hidden" id="debug_nonce" name="debug_nonce" value="'.esc_attr(wp_create_nonce(basename(__FILE__))).'">';
-                $data .= '<button type="submit" class="button button-primary">'.esc_html('Delete Log').'</button>';
+            if (file_exists($this->debug_file)) {
+                $data .= '<div style="margin: 10px -12px -12px -12px; padding: 10px; ';
+                $data .= 'border-top: 1px solid #dcdcde; background-color: #f6f7f7;">';
+                $data .= '<form action="'.admin_url('index.php').'" method="post">';
+                $data .= '<input type="hidden" id="debug_nonce" name="debug_nonce" value="'.wp_create_nonce(basename(__FILE__)).'">';
+                $data .= '<button type="submit" class="button button-primary">Delete Log</button>';
                 $data .= '</form>';
-            endif;
-            $data .= '</div>';
-            $data .= '<div style="flex: 1 1 50%; align-self: center; text-align: right;">';
-            $data .= '<strong>'.$file_mb_format.' MB</strong></div>';
+                $data .= '</div>';
+            }
             $data .= '</div>';
             $data .= '</div>';
-            echo $data;
+            echo wp_kses($data, array(
+                'div' => array(
+                    'class' => true,
+                    'style' => true,
+                    'readonly' => true,
+                ),
+                'textarea' => array(
+                    'class' => true,
+                    'style' => true,
+                    'readonly' => true,
+                ),
+                'form' => array(
+                    'action' => true,
+                    'method' => true,
+                ),
+                'input' => array(
+                    'type' => true,
+                    'id' => true,
+                    'name' => true,
+                    'value' => true,
+                ),
+                'button' => array(
+                    'type' => true,
+                    'class' => true,
+                ),
+                'strong' => array(),
+            ));
         }
 
-        // activate callback
-        public function activate() {
+        // activate
+        public function do_activate() {
             return;
         }
 
-        // deactivate callback
-        public function deactivate() {
+        // deactivate
+        public function do_deactivate() {
             return;
         }
 
         // init
         public function init() {
             // on activation
-            register_activation_hook($this->class_file, array($this, 'activate'));
+            register_activation_hook($this->class_file, array($this, 'do_activate'));
 
             // on deactivation
-            register_deactivation_hook($this->class_file, array($this, 'deactivate'));
+            register_deactivation_hook($this->class_file, array($this, 'do_deactivate'));
 
             // add dashboard widget
             add_action('wp_dashboard_setup', array($this, 'add_widget'));
