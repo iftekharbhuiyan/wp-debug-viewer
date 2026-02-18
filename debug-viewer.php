@@ -77,7 +77,6 @@ if (!class_exists('BSFT_Debug_Viewer')) :
                 $data .= '</div>';
             }
             $data .= '</div>';
-            $data .= '</div>';
             echo wp_kses($data, array(
                 'div' => array(
                     'class' => true,
