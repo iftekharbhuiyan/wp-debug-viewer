@@ -1,18 +1,22 @@
 <?php
 /**
+ * Debug Viewer
+ * 
  * Plugin Name: Debug Viewer
+ * Plugin URI: https://github.com/iftekharbhuiyan/wp-debug-viewer
  * Description: A Plugin that allows site Administrators to see debug log content from Dashboard.
+ * Version: 1.0.1
  * Author: Iftekhar Bhuiyan
- * Version: 1.0.0
- * Requires PHP: 8.0
- * Author URI: https://profiles.wordpress.org/iftekharbhuiyan/
+ * Author URI: https://bhuiyan.dev/
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * Requires at least: 5.0
+ * Requires PHP: 8.0
  */
 
 // disable direct loading
 if (!defined('ABSPATH')) {
-    die('Invalid request.');
+    exit;
 }
 
 if (!class_exists('BSFT_Debug_Viewer')) :
